@@ -1,0 +1,15 @@
+target/
+.env
+
+# IDEs
+.idea/
+*.iml
+.vscode/
+nbproject/
+nbactions.xml
+.classpath
+.project
+.settings/
+
+.DS_Store
+application-local.properties
