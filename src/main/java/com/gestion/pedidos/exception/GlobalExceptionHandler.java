@@ -1,5 +1,6 @@
 package com.gestion.pedidos.exception;
 
+import java.nio.file.AccessDeniedException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
@@ -41,6 +42,13 @@ public class GlobalExceptionHandler {
                 .body(new ErrorResponse(400, "Datos inválidos", errores, LocalDateTime.now()));
     }
 
+    // Usuario logueado sin permisos (ej: un CLIENTE intentando crear un producto)
+    @ExceptionHandler(AccessDeniedException.class)
+    public ResponseEntity<ErrorResponse> handleAccesoDenegado(AccessDeniedException ex) {
+        return ResponseEntity.status(HttpStatus.FORBIDDEN)
+                .body(new ErrorResponse(403, "No tenés permisos para realizar esta acción"));
+    }
+    
     // Cualquier otro error no contemplado
     @ExceptionHandler(Exception.class)
     public ResponseEntity<ErrorResponse> handleGeneral(Exception ex) {
