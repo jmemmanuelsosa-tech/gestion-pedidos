@@ -3,6 +3,7 @@ package com.gestion.pedidos.controller;
 import com.gestion.pedidos.dto.ProductoRequest;
 import com.gestion.pedidos.dto.ProductoResponse;
 import com.gestion.pedidos.service.ProductoService;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -11,6 +12,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+@Tag(name = "Productos", description = "Gestión del catálogo") 
 @RestController
 @RequestMapping("/api/productos")
 public class ProductoController {

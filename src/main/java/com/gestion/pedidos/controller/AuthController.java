@@ -3,6 +3,7 @@ package com.gestion.pedidos.controller;
 import com.gestion.pedidos.dto.RegistroRequest;
 import com.gestion.pedidos.dto.UsuarioResponse;
 import com.gestion.pedidos.service.AuthService;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -11,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+@Tag(name = "Auth", description = "Registro de usuarios")  
 @RestController
 @RequestMapping("/api/auth")
 public class AuthController {
