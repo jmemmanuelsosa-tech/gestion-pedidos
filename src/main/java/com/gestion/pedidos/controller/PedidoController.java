@@ -1,9 +1,12 @@
 package com.gestion.pedidos.controller;
 
 import com.gestion.pedidos.dto.CambioEstadoRequest;
+import com.gestion.pedidos.dto.MensajeIAResponse;
 import com.gestion.pedidos.dto.PedidoRequest;
 import com.gestion.pedidos.dto.PedidoResponse;
+import com.gestion.pedidos.service.AsistenteIAService;
 import com.gestion.pedidos.service.PedidoService;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -13,14 +16,17 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+@Tag(name = "Pedidos", description = "Gestión de pedidos") 
 @RestController
 @RequestMapping("/api/pedidos")
 public class PedidoController {
 
     private final PedidoService pedidoService;
+    private final AsistenteIAService asistenteIAService;
 
-    public PedidoController(PedidoService pedidoService) {
+    public PedidoController(PedidoService pedidoService, AsistenteIAService asistenteIAService) {
         this.pedidoService = pedidoService;
+        this.asistenteIAService = asistenteIAService;
     }
 
     // El usuario se obtiene del login, no del body
@@ -59,5 +65,12 @@ public class PedidoController {
         return authentication.getAuthorities()
                 .stream()
                 .anyMatch(rol -> rol.getAuthority().equals("ROLE_ADMIN"));
+    }
+    
+    @GetMapping("/{id}/mensaje-ia")
+    public ResponseEntity<MensajeIAResponse> mensajeIA(@PathVariable Long id,
+                                                       Authentication authentication) {
+        return ResponseEntity.ok(
+                asistenteIAService.generarMensaje(id, authentication.getName(), esAdmin(authentication)));
     }
 }
